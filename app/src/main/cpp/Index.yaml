@@ -1,0 +1,170 @@
+version: "1.2"
+last_updated: "2023-07-11T16:00:00Z"
+
+files:
+  CollisionHandler.cpp:
+    dependencies:
+      - raylib.h
+      - CollisionHandler.h
+      - Eggcken.h
+      - raymath.h
+    functions:
+      CheckCollision:
+        signature: "bool CheckCollision(const Eggcken& eggcken)"
+        description: "Checks for collisions between GallusDomesticus instances"
+
+  CollisionHandler.h:
+    dependencies:
+      - raylib.h
+      - Eggcken.h
+    classes:
+      CollisionHandler:
+        description: "Handles collision detection in the game"
+        public_methods:
+          CheckCollision:
+            signature: "static bool CheckCollision(const Eggcken& eggcken)"
+            description: "Checks for collisions between GallusDomesticus instances"
+
+  Eggcken.cpp:
+    dependencies:
+      - Eggcken.h
+      - raylib.h
+      - raymath.h
+      - cmath
+      - random
+      - algorithm
+      - iostream
+    functions:
+      InitializeGallusDomesticus:
+        signature: "void InitializeGallusDomesticus(int numChickens, int numGalluses)"
+        description: "Initializes the game with a given number of chickens and galluses"
+      CreateGallusDomesticus:
+        signature: "void CreateGallusDomesticus(State state)"
+        description: "Creates a new GallusDomesticus instance"
+      HandleGallusDomesticusCollision:
+        signature: "void HandleGallusDomesticusCollision(GallusDomesticus& gallus1, GallusDomesticus& gallus2)"
+        description: "Handles collision between two GallusDomesticus instances"
+      Update:
+        signature: "void Update()"
+        description: "Updates the game state"
+      UpdateGallusDomesticus:
+        signature: "void UpdateGallusDomesticus(GallusDomesticus& gallus, float deltaTime)"
+        description: "Updates a single GallusDomesticus instance"
+      CreateEgg:
+        signature: "void CreateEgg(const Vector2& position)"
+        description: "Creates a new egg at the specified position"
+      RemoveOldestGallusDomesticus:
+        signature: "void RemoveOldestGallusDomesticus()"
+        description: "Removes the oldest GallusDomesticus instance"
+      Draw:
+        signature: "void Draw()"
+        description: "Renders all game objects"
+
+  Eggcken.h:
+    dependencies:
+      - raylib.h
+      - InputHandler.h
+      - vector
+    classes:
+      Eggcken:
+        description: "Main game class managing chickens, eggs, and their interactions"
+        public_methods:
+          Update:
+            signature: "void Update()"
+            description: "Updates game state, including all GallusDomesticus instances"
+          Draw:
+            signature: "void Draw()"
+            description: "Renders all game objects to the screen"
+          GetGallusDomesticusPositions:
+            signature: "std::vector<Vector2> GetGallusDomesticusPositions() const"
+            description: "Returns positions of all GallusDomesticus instances"
+          GetGallusDomesticusRadii:
+            signature: "std::vector<float> GetGallusDomesticusRadii() const"
+            description: "Returns radii of all GallusDomesticus instances"
+          GetInteractGallusDomesticusPosition:
+            signature: "Vector2 GetInteractGallusDomesticusPosition() const"
+            description: "Returns position of the interaction GallusDomesticus"
+          GetInteractGallusDomesticusRadius:
+            signature: "float GetInteractGallusDomesticusRadius() const"
+            description: "Returns radius of the interaction GallusDomesticus"
+        private_methods:
+          HandleGallusDomesticusCollision:
+            signature: "void HandleGallusDomesticusCollision(GallusDomesticus& gallus1, GallusDomesticus& gallus2)"
+            description: "Handles collision between two GallusDomesticus instances"
+          InitializeGallusDomesticus:
+            signature: "void InitializeGallusDomesticus(int numChickens, int numGalluses)"
+            description: "Initializes the game with a given number of chickens and galluses"
+          UpdateGallusDomesticus:
+            signature: "void UpdateGallusDomesticus(GallusDomesticus& gallus, float deltaTime)"
+            description: "Updates a single GallusDomesticus instance"
+          CreateGallusDomesticus:
+            signature: "void CreateGallusDomesticus(State state)"
+            description: "Creates a new GallusDomesticus instance"
+          CreateEgg:
+            signature: "void CreateEgg(const Vector2& position)"
+            description: "Creates a new egg at the specified position"
+          RemoveOldestGallusDomesticus:
+            signature: "void RemoveOldestGallusDomesticus()"
+            description: "Removes the oldest GallusDomesticus instance"
+    enums:
+      State:
+        values: [Egg, Chicken, Gallus]
+        description: "Represents the life stages of a GallusDomesticus"
+    structs:
+      GallusDomesticus:
+        description: "Represents a single chicken, egg, or gallus in the game"
+        members:
+          - "float x, y"
+          - "float speedX, speedY"
+          - "float radius"
+          - "Color color"
+          - "State state"
+          - "float age"
+        methods:
+          update:
+            signature: "void update()"
+            description: "Updates the GallusDomesticus instance"
+          draw:
+            signature: "void draw() const"
+            description: "Renders the GallusDomesticus instance"
+    constants:
+      MAX_GALLUSDOMESTICUS:
+        value: 100
+        description: "Maximum number of GallusDomesticus instances allowed"
+
+  InputHandler.cpp:
+    dependencies:
+      - InputHandler.h
+      - raylib.h
+    functions:
+      Update:
+        signature: "void Update()"
+        description: "Updates the input state"
+
+  InputHandler.h:
+    dependencies:
+      - raylib.h
+    classes:
+      InputHandler:
+        description: "Handles user input for the game"
+        public_methods:
+          Update:
+            signature: "void Update()"
+            description: "Updates the input state"
+          IsTouchPressed:
+            signature: "bool IsTouchPressed() const"
+            description: "Returns whether a touch input is detected"
+          GetTouchPosition:
+            signature: "Vector2 GetTouchPosition() const"
+            description: "Returns the position of the touch input"
+
+  main.cpp:
+    dependencies:
+      - iostream
+      - raylib.h
+      - Eggcken.h
+      - InputHandler.h
+    functions:
+      main:
+        signature: "int main()"
+        description: "Entry point of the application"
